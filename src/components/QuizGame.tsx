@@ -153,27 +153,27 @@ export default function QuizGame({ playerName, gameMode, questions, onFinishGame
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.25 }}
-          className="bg-white border-4 border-[#E0E7FF] rounded-[32px] shadow-2xl overflow-hidden"
+          className="bg-white border-2 sm:border-4 border-[#E0E7FF] rounded-2xl sm:rounded-[32px] shadow-2xl overflow-hidden"
           id={`question-card-${currentQuestion.id}`}
         >
-          {/* Header Theme tag with Vibrant Palette colors */}
-          <div className="px-6 py-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between" id="question-topic-bar">
-            <span className="text-[12px] font-extrabold uppercase tracking-widest text-[#6366F1]">
+          {/* Header Theme tag with Vibrant Palette colors (Responsive Padding) */}
+          <div className="px-4 sm:px-6 py-3 sm:py-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between" id="question-topic-bar">
+            <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-widest text-[#6366F1] truncate max-w-[70%]">
               DESAFIO: {currentQuestion.topic}
             </span>
-            <span className="text-xs font-black text-slate-400 font-mono bg-slate-200/60 px-2 py-0.5 rounded">
+            <span className="text-[10px] sm:text-xs font-black text-slate-400 font-mono bg-slate-200/60 px-2 py-0.5 rounded shrink-0">
               QUESTÃO {currentQuestion.id}
             </span>
           </div>
 
-          <div className="p-6 sm:p-10 space-y-6" id="question-body">
-            {/* Question Text */}
-            <div className="text-slate-800 font-bold text-xl sm:text-2xl leading-snug space-y-3" id="question-text-field">
+          <div className="p-4 sm:p-10 space-y-5 sm:space-y-6" id="question-body">
+            {/* Question Text (Responsive Text Sizes & Spacing) */}
+            <div className="text-slate-800 font-bold text-base sm:text-2xl leading-snug space-y-3" id="question-text-field">
               {renderFormattedText(currentQuestion.text)}
             </div>
 
             {/* Answer Options */}
-            <div className="space-y-3" id="options-block">
+            <div className="space-y-2.5 sm:space-y-3" id="options-block">
               {Object.entries(currentQuestion.options).map(([key, value]) => {
                 const isSelected = selectedOption === key;
                 let optionStyle = 'border-[#E2E8F0] bg-[#F8FAFC] text-[#475569] hover:border-[#6366F1] hover:bg-[#EEF2FF] hover:-translate-y-0.5 shadow-sm';
@@ -207,17 +207,17 @@ export default function QuizGame({ playerName, gameMode, questions, onFinishGame
                     onClick={() => handleOptionSelect(key)}
                     id={`option-btn-${currentQuestion.id}-${key}`}
                     disabled={confirmed}
-                    className={`w-full text-left p-5 rounded-2xl border-2 transition-all flex items-start gap-4 group cursor-pointer ${optionStyle}`}
+                    className={`w-full text-left p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border-2 transition-all flex items-start gap-3 sm:gap-4 group cursor-pointer ${optionStyle}`}
                   >
-                    {/* Square layout for Option label, mirroring Design HTML's .option-label */}
+                    {/* Square layout for Option label, mimicking Design HTML's .option-label */}
                     <span
-                      className={`text-sm font-black w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-sm transition-all ${labelStyle}`}
+                      className={`text-xs sm:text-sm font-black w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center shrink-0 shadow-sm transition-all ${labelStyle}`}
                     >
                       {key}
                     </span>
 
-                    {/* Option Text */}
-                    <span className="text-sm sm:text-base font-semibold leading-relaxed flex-1 pt-0.5">
+                    {/* Option Text with responsive layout */}
+                    <span className="text-xs sm:text-base font-semibold leading-relaxed flex-1 pt-0.5">
                       {value}
                     </span>
 
@@ -228,22 +228,22 @@ export default function QuizGame({ playerName, gameMode, questions, onFinishGame
               })}
             </div>
 
-            {/* Academic Explanation Slide in (Only in Study Mode when Confirmed) */}
+            {/* Academic Explanation Slide in (Responsive Spacing) */}
             <AnimatePresence>
               {confirmed && gameMode === 'study' && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  className="bg-[#FACC15] text-[#854D0E] rounded-2xl p-5 overflow-hidden border border-amber-300/45 shadow-md"
+                  className="bg-[#FACC15] text-[#854D0E] rounded-xl sm:rounded-2xl p-4 sm:p-5 overflow-hidden border border-amber-300/45 shadow-md"
                   id="explanation-block"
                 >
-                  <div className="flex items-start gap-3">
-                    <span className="p-1.5 rounded-lg bg-[#854D0E]/10 shrink-0 mt-0.5">
-                      <MessageSquare className="w-4 h-4 text-[#854D0E]" />
+                  <div className="flex items-start gap-2.5 sm:gap-3">
+                    <span className="p-1 sm:p-1.5 rounded-lg bg-[#854D0E]/10 shrink-0 mt-0.5">
+                      <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#854D0E]" />
                     </span>
                     <div className="space-y-1">
-                      <h4 className="font-extrabold text-xs sm:text-sm uppercase tracking-wider">💡 Dica Coesa de Estudo:</h4>
+                      <h4 className="font-extrabold text-[11px] sm:text-sm uppercase tracking-wider">💡 Dica Coesa de Estudo:</h4>
                       <p className="leading-relaxed text-xs sm:text-sm font-medium whitespace-pre-line">
                         {currentQuestion.explanation}
                       </p>
@@ -253,9 +253,9 @@ export default function QuizGame({ playerName, gameMode, questions, onFinishGame
               )}
             </AnimatePresence>
 
-            {/* Controls panel */}
-            <div className="flex items-center justify-between border-t border-slate-100 pt-6 mt-4" id="controls-panel">
-              <span className="text-xs text-slate-500 font-extrabold uppercase tracking-wider">
+            {/* Controls panel - Flex wrap column on mobile to save horizontal space, row on desktop */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 border-t border-slate-100 pt-5 sm:pt-6 mt-4" id="controls-panel">
+              <span className="text-[10px] sm:text-xs text-slate-500 font-extrabold uppercase tracking-wider text-center sm:text-left">
                 {gameMode === 'study' ? 'Modo de Estudo' : 'Modo Desafio'}
               </span>
 
@@ -267,7 +267,7 @@ export default function QuizGame({ playerName, gameMode, questions, onFinishGame
                     id="confirm-answer-btn"
                     disabled={!selectedOption}
                     onClick={handleConfirm}
-                    className={`px-8 h-12 rounded-xl text-sm font-black flex items-center gap-2 transition-all outline-none ${
+                    className={`w-full sm:w-auto px-6 sm:px-8 h-12 rounded-xl text-xs sm:text-sm font-black flex items-center justify-center gap-2 transition-all outline-none ${
                       selectedOption
                         ? 'bg-[#6366F1] hover:bg-[#5053db] cursor-pointer text-white shadow-[0_4px_0_#4338CA] active:translate-y-[2px] active:shadow-[0_2px_0_#4338CA]'
                         : 'bg-slate-100 text-slate-400 cursor-not-allowed'
@@ -280,7 +280,7 @@ export default function QuizGame({ playerName, gameMode, questions, onFinishGame
                     type="button"
                     id="next-question-btn"
                     onClick={handleNextQuestion}
-                    className="px-8 h-12 bg-[#6366F1] hover:bg-[#5053db] cursor-pointer text-white font-black rounded-xl text-sm flex items-center gap-2 transition-all shadow-[0_4px_0_#4338CA] active:translate-y-[2px] active:shadow-[0_2px_0_#4338CA]"
+                    className="w-full sm:w-auto px-6 sm:px-8 h-12 bg-[#6366F1] hover:bg-[#5053db] cursor-pointer text-white font-black rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-[0_4px_0_#4338CA] active:translate-y-[2px] active:shadow-[0_2px_0_#4338CA]"
                   >
                     {currentIndex < questions.length - 1 ? 'SEGUINTE' : 'VER VEREDITO'}
                     <ArrowRight className="w-4 h-4" />
@@ -293,7 +293,7 @@ export default function QuizGame({ playerName, gameMode, questions, onFinishGame
                   id="confirm-exam-answer-btn"
                   disabled={!selectedOption}
                   onClick={handleConfirm}
-                  className={`px-8 h-12 rounded-xl text-sm font-black flex items-center gap-2 transition-all outline-none ${
+                  className={`w-full sm:w-auto px-6 sm:px-8 h-12 rounded-xl text-xs sm:text-sm font-black flex items-center justify-center gap-2 transition-all outline-none ${
                     selectedOption
                       ? 'bg-[#6366F1] hover:bg-[#5053db] cursor-pointer text-white shadow-[0_4px_0_#4338CA] active:translate-y-[2px] active:shadow-[0_2px_0_#4338CA]'
                       : 'bg-slate-105 text-slate-400 cursor-not-allowed'

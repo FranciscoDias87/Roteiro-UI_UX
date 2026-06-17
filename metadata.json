@@ -1,0 +1,6 @@
+{
+  "name": "Quiz de Estudo UI/UX",
+  "description": "Um jogo interativo e educativo para ajudar no estudo de conceitos fundamentais de design visual, UI/UX, direitos autorais e princípios C-R-A-P.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

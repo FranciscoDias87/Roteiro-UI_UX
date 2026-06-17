@@ -1,0 +1,34 @@
+{
+  "collections": {
+    "student_levels": {
+      "description": "Records individual level completions by name",
+      "schema": {
+        "playerName": "string",
+        "levelName": "string",
+        "score": "number",
+        "total": "number",
+        "mode": "string",
+        "timestamp": "timestamp",
+        "timeTaken": "number",
+        "perfectScore": "boolean"
+      }
+    },
+    "student_sessions": {
+      "description": "Records overall session scores for complete map success",
+      "schema": {
+        "playerName": "string",
+        "totalScore": "number",
+        "totalQuestions": "number",
+        "percentage": "number",
+        "completedLevelsCount": "number",
+        "totalTime": "number",
+        "mode": "string",
+        "timestamp": "timestamp"
+      }
+    }
+  },
+  "rules": {
+    "student_levels": "allow read, write: if true;",
+    "student_sessions": "allow read, write: if true;"
+  }
+}

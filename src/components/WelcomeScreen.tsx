@@ -4,11 +4,12 @@ import { Play, Sparkles, BookOpen, Clock, User, Award } from 'lucide-react';
 
 interface WelcomeScreenProps {
   onStartGame: (playerName: string, mode: 'study' | 'exam') => void;
+  onEnterTeacherPanel: () => void;
 }
 
-export default function WelcomeScreen({ onStartGame }: WelcomeScreenProps) {
+export default function WelcomeScreen({ onStartGame, onEnterTeacherPanel }: WelcomeScreenProps) {
   const [name, setName] = useState('');
-  const [mode, setMode] = useState<'study' | 'exam'>('study');
+  const [mode, setMode] = useState<'study' | 'exam'>('exam'); // standard exam default
   const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -138,6 +139,16 @@ export default function WelcomeScreen({ onStartGame }: WelcomeScreenProps) {
             <Play className="w-5 h-5 fill-current" /> Começar Missão
           </button>
         </form>
+
+        <div className="flex justify-center items-center pt-2">
+          <button
+            type="button"
+            onClick={onEnterTeacherPanel}
+            className="text-xs font-black text-[#6366F1] bg-[#EEF2FF] hover:bg-[#E0E7FF] px-4 py-2 rounded-xl transition-all cursor-pointer inline-flex items-center gap-1.5"
+          >
+            🔒 SOU PROFESSOR (VER NOTAS DA CLASSE)
+          </button>
+        </div>
 
         {/* Informative Stats */}
         <div className="border-t border-slate-100 pt-5 mt-4" id="welcome-topics">

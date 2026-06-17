@@ -10,9 +10,20 @@ interface ScoreScreenProps {
   answers: { [questionId: number]: string };
   totalTime: number;
   onRestart: () => void;
+  activeLevelTitle?: string;
+  onSaveAndReturnToTrail?: (correctCount: number, totalQuestions: number) => void;
 }
 
-export default function ScoreScreen({ playerName, gameMode, questions, answers, totalTime, onRestart }: ScoreScreenProps) {
+export default function ScoreScreen({ 
+  playerName, 
+  gameMode, 
+  questions, 
+  answers, 
+  totalTime, 
+  onRestart,
+  activeLevelTitle,
+  onSaveAndReturnToTrail
+}: ScoreScreenProps) {
   const [expandedExplanation, setExpandedExplanation] = useState<{ [qId: number]: boolean }>({});
 
   // Calculations
@@ -24,7 +35,7 @@ export default function ScoreScreen({ playerName, gameMode, questions, answers, 
     }
   });
 
-  const percentage = (correctCount / totalQuestions) * 100;
+  const percentage = Math.round((correctCount / totalQuestions) * 100);
 
   // Format time
   const formatTimeMinutes = (seconds: number) => {
@@ -37,39 +48,39 @@ export default function ScoreScreen({ playerName, gameMode, questions, answers, 
   };
 
   // Get personalized score badge & encouragement in PT-BR
-  const getBadgeAndFeedback = (score: number) => {
-    if (score === 10) {
+  const getBadgeAndFeedback = (pct: number) => {
+    if (pct === 100) {
       return {
         title: "Pixel Perfeito! 👑",
-        feedback: "Desempenho espetacular, você dominou absolutamente todos os conceitos de Práticas de Interface, Leis de Direitos Autorais e Regras C-R-A-P!",
+        feedback: "Desempenho espetacular, você dominou absolutamente todos os conceitos propostos com maestria!",
         color: "text-amber-600 bg-amber-50 border-amber-200",
         ringColor: "stroke-amber-500"
       };
-    } else if (score >= 8) {
+    } else if (pct >= 70) {
       return {
         title: "Mestre de UI/UX 🌟",
-        feedback: "Excelente! Você demonstrou uma sólida compreensão de design estrutural, jornada do usuário e melhores práticas de acessibilidade nas telas.",
+        feedback: "Excelente! Você demonstrou uma sólida compreensão de design estrutural, jornada do usuário e das melhores práticas.",
         color: "text-indigo-600 bg-indigo-50 border-indigo-200",
         ringColor: "stroke-indigo-500"
       };
-    } else if (score >= 6) {
+    } else if (pct >= 50) {
       return {
         title: "Designer Técnico 📐",
-        feedback: "Bom trabalho! Você está no caminho certo. Revise as questões que errou no gabarito abaixo para solidificar este conhecimento e alcançar a maestria.",
+        feedback: "Bom trabalho! Você está no caminho certo. Revise as questões que errou no gabarito comentado abaixo para solidificar este aprendizado.",
         color: "text-emerald-600 bg-emerald-50 border-emerald-200",
         ringColor: "stroke-emerald-500"
       };
     } else {
       return {
         title: "Estudante Iterativo 🔄",
-        feedback: "Como diz a heurística: o aprendizado e o design são processos iterativos de constante refinamento! Leia as explicações comentadas abaixo para consolidar as regras visuais.",
+        feedback: "Como diz a heurística: o aprendizado e o design são processos iterativos de constante refinamento! Leia as explicações comentadas abaixo.",
         color: "text-slate-600 bg-slate-50 border-slate-200",
         ringColor: "stroke-slate-500"
       };
     }
   };
 
-  const performance = getBadgeAndFeedback(correctCount);
+  const performance = getBadgeAndFeedback(percentage);
 
   const toggleExplanation = (qId: number) => {
     setExpandedExplanation((prev) => ({
@@ -152,13 +163,23 @@ export default function ScoreScreen({ playerName, gameMode, questions, answers, 
           </div>
 
           <div className="pt-2">
-            <button
-              onClick={onRestart}
-              id="play-again-btn"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 bg-[#6366F1] hover:bg-[#5053db] cursor-pointer text-white font-black rounded-xl text-sm transition-all shadow-[0_4px_0_#4338CA] active:translate-y-[2px] active:shadow-[0_2px_0_#4338CA]"
-            >
-              <RotateCcw className="w-4 h-4" /> RECOMECAR DESAFIO
-            </button>
+            {onSaveAndReturnToTrail ? (
+              <button
+                onClick={() => onSaveAndReturnToTrail(correctCount, totalQuestions)}
+                id="save-and-return-btn"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#58CC02] hover:bg-[#4ea80b] cursor-pointer text-white font-black rounded-xl text-sm transition-all shadow-[0_4px_0_#3c8e03] active:translate-y-[2px] active:shadow-[0_2px_0_#3c8e03]"
+              >
+                <Check className="w-4 h-4" /> SALVAR E SALTAR À TRILHA
+              </button>
+            ) : (
+              <button
+                onClick={onRestart}
+                id="play-again-btn"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 bg-[#6366F1] hover:bg-[#5053db] cursor-pointer text-white font-black rounded-xl text-sm transition-all shadow-[0_4px_0_#4338CA] active:translate-y-[2px] active:shadow-[0_2px_0_#4338CA]"
+              >
+                <RotateCcw className="w-4 h-4" /> RECOMECAR DESAFIO
+              </button>
+            )}
           </div>
         </div>
       </div>
